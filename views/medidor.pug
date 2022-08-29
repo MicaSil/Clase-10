@@ -1,0 +1,7 @@
+extends layout 
+
+block medidor
+    h2(style="color: blue;") #{titulo} 
+    span= min
+    meter(min=min max=max value=value) 
+    span= max 
