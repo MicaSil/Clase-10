@@ -28,7 +28,7 @@ app.get('/test', (req, res) =>{
     res.render('medidor', datos);
 });
 
-const PORT = 5001;
+const PORT = 8080;
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor escucando el puerto ${PORT}`);
 })
