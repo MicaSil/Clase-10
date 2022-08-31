@@ -1,38 +1,28 @@
 const express = require('express');
-const path = require('path');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('./public'));
+app.use(express.urlencoded({extended: true}))
 
 app.set('views', './views');
 app.set('view engine', 'pug');
 
-app.get('/test', (req, res) =>{
-    const datos = {
-        min: 1,
-        max: 10,
-        value: 7,
-        titulo: 'Medidior de temperatura'
-    }
-    res.render('medidor', datos);
-});
 
-app.get('/test', (req, res) =>{
-    const datos = {
-        min: req.query.min,
-        max: 10,
-        value: 7,
-        titulo: 'Medidor de temperatura'
-    }
-    res.render('medidor', datos);
-});
+const DB_PRODUCTOS = []
+
+app.get('/', (req, res)=>{
+    res.render('vista', {DB_PRODUCTOS})
+})
+app.post('/productos', (req, res) => {
+    DB_PRODUCTOS.push(req.body)
+    console.log(DB_PRODUCTOS)
+    res.redirect('/') 
+})
 
 const PORT = 8080;
 const server = app.listen(PORT, ()=>{
-    console.log(`Servidor escucando el puerto ${PORT}`);
-})
+    console.log(`Servidor esuchando el puerto ${server.address().port}`)
+});
 
-server.on('error', error =>{
-    console.log(`Error en el servidor ${error}`)
-})
+server.on('error', err => console.log(`Error en server ${err}`));
